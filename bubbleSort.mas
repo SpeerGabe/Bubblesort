@@ -1,0 +1,166 @@
+ORG 100
+
+/ ===== INPUT 5 NUMBERS =====
+Input
+Store A
+Input
+Store B
+Input
+Store C
+Input
+Store D
+Input
+Store E
+
+/ ===== PASS 1 =====
+Pass1,  Load A
+        Subt B
+        Skipcond 000    / If A > B, skip swap
+        Jump SwapAB
+SkipAB1, Load B
+        Subt C
+        Skipcond 000
+        Jump SwapBC
+SkipBC1, Load C
+        Subt D
+        Skipcond 000
+        Jump SwapCD
+SkipCD1, Load D
+        Subt E
+        Skipcond 000
+        Jump SwapDE
+        Jump Pass2   / Go to next pass
+
+/ ===== SWAP SECTIONS =====
+SwapAB, Load B
+        Store Temp
+        Load A
+        Store B
+        Load Temp
+        Store A
+        Jump SkipAB1
+
+SwapBC, Load C
+        Store Temp
+        Load B
+        Store C
+        Load Temp
+        Store B
+        Jump SkipBC1
+
+SwapCD, Load D
+        Store Temp
+        Load C
+        Store D
+        Load Temp
+        Store C
+        Jump SkipCD1
+
+SwapDE, Load E
+        Store Temp
+        Load D
+        Store E
+        Load Temp
+        Store D
+        Jump Pass2
+
+/ ===== PASS 2 =====
+Pass2,  Load A
+        Subt B
+        Skipcond 000
+        Jump SwapAB2
+SkipAB2, Load B
+        Subt C
+        Skipcond 000
+        Jump SwapBC2
+SkipBC2, Load C
+        Subt D
+        Skipcond 000
+        Jump SwapCD2
+        Jump Pass3
+
+SwapAB2, Load B
+        Store Temp
+        Load A
+        Store B
+        Load Temp
+        Store A
+        Jump SkipAB2
+
+SwapBC2, Load C
+        Store Temp
+        Load B
+        Store C
+        Load Temp
+        Store B
+        Jump SkipBC2
+
+SwapCD2, Load D
+        Store Temp
+        Load C
+        Store D
+        Load Temp
+        Store C
+        Jump Pass3
+
+/ ===== PASS 3 =====
+Pass3,  Load A
+        Subt B
+        Skipcond 000
+        Jump SwapAB3
+SkipAB3, Load B
+        Subt C
+        Skipcond 000
+        Jump SwapBC3
+        Jump Pass4
+
+SwapAB3, Load B
+        Store Temp
+        Load A
+        Store B
+        Load Temp
+        Store A
+        Jump SkipAB3
+
+SwapBC3, Load C
+        Store Temp
+        Load B
+        Store C
+        Load Temp
+        Store B
+        Jump Pass4
+
+/ ===== PASS 4 =====
+Pass4,  Load A
+        Subt B
+        Skipcond 000
+        Jump SwapAB4
+        Jump DoneSort
+
+SwapAB4, Load B
+        Store Temp
+        Load A
+        Store B
+        Load Temp
+        Store A
+
+/ ===== PRINT SORTED NUMBERS =====
+DoneSort, Load A
+        Output
+        Load B
+        Output
+        Load C
+        Output
+        Load D
+        Output
+        Load E
+        Output
+
+Halt
+
+A,      DEC 0
+B,      DEC 0
+C,      DEC 0
+D,      DEC 0
+E,      DEC 0
+Temp,   DEC 0
